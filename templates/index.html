@@ -3,50 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>The World Clock</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Kanit:wght@300&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@600&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@500&display=swap" rel="stylesheet">
 </head>
-
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-    }
-
-    body {
-        background-color: rgb(6, 6, 79);
-        overflow-x: hidden;
-        overflow-y: hidden;
-    }
-
-    #name {
-        position: absolute;
-        background-color: white;
-        width: fit-content;
-        opacity: 0;
-        border-radius: 5px;
-        border: 3px solid darkblue;
-        padding: 5px;
-        font-size: 1.5rem;
-    }
-
-    #time {
-        background-color: white;
-        width: fit-content;
-        border-radius: 5px;
-        border: 3px solid darkblue;
-        padding: 5px;
-        font-size: 1.5rem;
-    }
-
-    svg path {
-        cursor: pointer;
-    }
-
-    svg path:hover {
-        fill: pink;
-    }
-
-</style>
 
 <body>
     <?xml version="1.0"?>
@@ -55,9 +33,18 @@
         <p id="namep">Name</p>
     </div>
 
-    <div id="timeCont">
-        <p id="time">Time</p>
+    <div class="popup" id="popup">
+        <img src="clock.png">
+        <h2 id="country">Country</h2>
+        <div class="loader" id="loader"></div>
+        <p id="date">DATE</p>
+        <p id="time">TIME</p>
+        <p id="thanks">Thanks for using World Clock.</p>
+        <button type="button" onclick="closePopup()">OK</button>
     </div>
+    
+    <h1 id="title">THE WORLD CLOCK</h1>
+    <!-- <h4 id="tagline">where time joins the world</h4> -->
 
     <svg id="allSvg" baseprofile="tiny" fill="#ececec" stroke="black" stroke-linecap="round" stroke-linejoin="round"
         version="1.2" viewbox="0 0 2000 857" xmlns="http://www.w3.org/2000/svg">
@@ -1598,9 +1585,48 @@
 
         const res = await fetch(url)
         data = await res.json()
-        time = data.datetime
 
-        document.getElementById("time").innerText = `${place}'s time = ${time} ${data.timezone_abbreviation}`
+        let dateandtime = data.datetime
+        let timezone = data.timezone_location;
+        let timezone_abbreviation = data.timezone_abbreviation;
+
+        let date = data.datetime.substring(0, 10);
+        let time = data.datetime.substring(11, 19);
+
+        const dateComponents = dateandtime.split("-");
+        const year = parseInt(dateComponents[0], 10);
+        const month = parseInt(dateComponents[1], 10) - 1;
+        const day = parseInt(dateComponents[2], 10);
+
+        const dateObject = new Date(year, month, day);
+
+        function updateCurrentTime(time, timezone_abbreviation) {
+            document.getElementById("time").innerText = `${time} ${data.timezone_abbreviation}`;
+        }
+        
+        updateCurrentTime(time, timezone_abbreviation);
+
+        // setInterval(function () {
+        //     const now = new Date();
+        //     const timeString = now.toLocaleTimeString([], {
+        //         timeZone: timezone,
+        //         timeZoneName: 'short',
+        //         hour12: false
+        //     });
+        //     updateCurrentTime(timeString, timezone_abbreviation);
+        // }, 1000);
+
+        function dateToWordsWithDay(date) {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString(undefined, options);
+        }
+        const formattedDate = dateToWordsWithDay(dateObject);
+        // console.log("hello");
+        // console.log(formattedDate);
+
+        document.getElementById("date").innerText = `${formattedDate}`
+        document.getElementById("time").innerText = `${time} ${data.timezone_abbreviation}`
+
     } 
 
     document.querySelectorAll(".allPaths").forEach(e =>{
@@ -1609,25 +1635,59 @@
                 x = j.clientX
                 y = j.clientY
                 document.getElementById("name").style.top=y-20+"px"
-                document.getElementById("name").style.left=x-20+"px"
+                document.getElementById("name").style.left=x+10+"px"
             }
 
-            // e.style.fill = "pink"
-            // document.getElementById("namep").innerText = e.id
-            // document.getElementById("name").style.opacity = 1
+            e.style.fill = "#6fd649";
+            document.getElementById("namep").innerText = e.id;
+            document.getElementById("name").style.opacity = 1
 
         })
 
-        // e.addEventListener("mouseleave", function() {
-        //     e.style.fill = "#ececec"
-        //     document.getElementById("name").style.opacity = 0
-        // })
+        e.addEventListener("mouseleave", function() {
+            e.style.fill = "#ececec"
+            document.getElementById("name").style.opacity = 0
+        })
 
-        // e.addEventListener("click", function() {
-        //     getData(e.id)
-        // })
+        let popup = document.getElementById("popup");
+        function openPopup() {
+            popup.classList.add("open-popup");
+            document.getElementById("date").style.opacity = 1;
+            document.getElementById("time").style.opacity = 1;
+        }
 
-    // })
+
+        e.addEventListener("click", function() {
+            document.getElementById("country").innerText = e.id.toUpperCase();
+            openPopup();
+            
+            document.getElementById("loader").style.visibility = "visible";
+            document.getElementById("date").style.visibility = "hidden";
+            document.getElementById("time").style.visibility = "hidden";
+
+            getData(e.id)
+                .then(function(edata) {
+                    // Data retrieval successful, hide the loader
+                    document.getElementById("loader").style.visibility = "hidden";
+                    document.getElementById("date").style.visibility = "visible";
+                    document.getElementById("time").style.visibility = "visible";
+                })
+                .catch(function(error) {
+                    // Handle any errors that occurred during data retrieval
+                    console.error("Error fetching data:", error);
+
+                    // Hide the loader in case of an error
+                    document.getElementById("loader").style.visibility = "hidden";
+                    document.getElementById("date").innerText = "Data not found, please check your internet connection.."
+                });
+                     
+        })
+    })
+    function closePopup() {
+        popup.classList.remove("open-popup");
+        document.getElementById("date").style.opacity = 0;
+        document.getElementById("time").style.opacity = 0;
+    }
 
 </script>
 

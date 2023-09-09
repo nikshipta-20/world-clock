@@ -1,0 +1,138 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #CAEDFF; /*rgb(6, 6, 79);*/
+    overflow-x: hidden;
+    /* overflow-y: hidden; */
+}
+
+#name {
+    position: absolute;
+    color: white;
+    background-color: #C58940;
+    width: fit-content;
+    opacity: 0;
+    border-radius: 30px;
+    /* border: 3px solid darkblue; */
+    padding: 10px 30px;
+    border: 0;
+    font-size: 1.5rem;
+}
+
+#title {
+    transform: rotate(-90deg);
+    position: absolute;
+    top: 45%;
+    left: -13%;
+    font-size: 50px;
+    color: #663f12;
+    font-family: 'Lexend', sans-serif;
+}
+
+/* #tagline {
+    transform: rotate(-90deg);
+    position: absolute;
+    color: #fff;
+    border: 1px solid #663f12;
+ 
+    top: 28%;
+    left: 2%;
+    font-family: 'Caveat', cursive;
+} */
+
+svg path {
+    cursor: pointer;
+}
+
+.popup {
+    width: 500px;
+    background: #fff;
+    border-radius: 6px;
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    text-align: center;
+    padding: 0 30px 30px;
+    color: #333;
+    visibility: hidden;
+    transition: transform 0.4s, top 0.4s;
+}
+.open-popup {
+    visibility: visible;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.popup img {
+    width: 100px;
+    margin-top: -50px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.popup h2 {
+    font-size: 45px;
+    font-family: 'Lexend', sans-serif;
+    font-weight: 500;
+    margin: 30px 0 30px;
+}
+.popup button {
+    width: 30%;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    padding: 10px 0;
+    background: #6fd649;
+    border: 0;
+    outline: none;
+    font-size: 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.popup p {
+    font-size: 30px;
+    margin-top: 10px;
+    font-family: 'Jost', sans-serif;
+}
+
+#thanks {
+    font-size: 15px;
+    position: absolute;
+    top: 90%;
+    left: 60%;
+    font-family: 'Caveat', cursive;
+}
+
+.loader {
+    position: absolute;
+    align-items: center;
+    position: absolute;
+    top: 37%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    border: 8px solid #f3f3f3; /* Light grey border */
+    border-top: 8px solid #6fd649; /* Blue border */
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    animation: spin 1s linear infinite; /* Spin animation */
+    margin: 20px auto; /* Center the spinner */
+    /* visibility: hidden; */
+  }
+  
+  /* Keyframes for the spin animation */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+
+
+
+
